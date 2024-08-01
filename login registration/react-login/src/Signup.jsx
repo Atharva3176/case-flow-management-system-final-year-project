@@ -1,81 +1,154 @@
-import { useState } from "react";
-import { Link } from "react-router-dom";
-import axios from 'axios'
-import { useNavigate } from "react-router-dom";
+import React, { useState } from 'react';
+import axios from 'axios';
+import { useNavigate } from 'react-router-dom';
+//import './Signup.css'; // Uncomment this line to include Signup specific CSS
 
-function Signup() {
-    const [name, setName] = useState()
-    const [email, setEmail] = useState()
-    const [password, setPassword] = useState()
-    const navigate = useNavigate()
+const Signup = () => {
+  const navigate = useNavigate();
+  const [formData, setFormData] = useState({
+    state: '',
+    barRegistrationNumber: '',
+    advocateName: '',
+    gender: '',
+    dateOfBirth: '',
+    placeOfPractice: 'District Court',
+    district: '',
+    mobileNumber: '',
+    email: '',
+    password: '',
+    confirmPassword: '',
+    otp: ''
+  });
 
-    const handleSubmit = (e) =>{
-        e.preventDefault()
-        console.log({ name, email, password }); 
-        axios.post('http://localhost:3001/register',{name,email,password})
-        .then(result => {console.log(result)
-          navigate('/login')
-        })
-        . catch(err => console.log(err))
+  const handleChange = (e) => {
+    setFormData({ ...formData, [e.target.name]: e.target.value });
+  };
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    if (formData.password !== formData.confirmPassword) {
+      alert("Passwords do not match");
+      return;
     }
 
+    try {
+      const response = await axios.post('http://localhost:3001/api/register', formData);
+      console.log(response.data);
+      alert("Registration successful");
+      navigate('/login');
+    } catch (error) {
+      console.error("There was an error registering the user!", error);
+      alert("Registration failed. Please try again.");
+    }
+  };
 
-    return (
-        <div className="d-flex justify-content-center align-items-center bg-secondary vh-100">
-          <div className="bg-white p-3 rounded w-25">
-            <h2>Register</h2>
-            <form onSubmit={handleSubmit}>
-            <div className="mb-3">
-                <label htmlFor="email">
-                  <strong>Name</strong>
-                </label>
-                <input
-                  type="text"
-                  placeholder="Enter Name"
-                  autoComplete="off"
-                  name="name"
-                  className="form-control rounded-0"
-                  onChange={(e) => setName(e.target.value)}
-                />
+  const handleGetOtp = () => {
+    alert("OTP sent to " + formData.mobileNumber);
+  };
+
+  return (
+    <div className="form-container">
+      <div className="form-header">Registration Form</div>
+      <form onSubmit={handleSubmit}>
+        <div className="form-section">
+          <h4>Bar Registration Detail</h4>
+          <div className="mb-3">
+            <label htmlFor="state" className="form-label">State</label>
+            <select id="state" name="state" className="form-select" onChange={handleChange} required>
+              <option value="">-- Select State --</option>
+              <option value="State1">State1</option>
+              <option value="State2">State2</option>
+            </select>
+          </div>
+          <div className="mb-3">
+            <label htmlFor="barRegistrationNumber" className="form-label">Bar Registration Number</label>
+            <input type="text" id="barRegistrationNumber" name="barRegistrationNumber" className="form-control" onChange={handleChange} required />
+          </div>
+          <div className="mb-3">
+            <label htmlFor="advocateName" className="form-label">Advocate Name</label>
+            <input type="text" id="advocateName" name="advocateName" className="form-control" onChange={handleChange} required />
+          </div>
+          <div className="mb-3">
+            <label className="form-label">Gender</label>
+            <div>
+              <div className="form-check form-check-inline">
+                <input className="form-check-input" type="radio" name="gender" id="genderMale" value="Male" onChange={handleChange} required />
+                <label className="form-check-label" htmlFor="genderMale">Male</label>
               </div>
-              <div className="mb-3">
-                <label htmlFor="email">
-                  <strong>Email</strong>
-                </label>
-                <input
-                  type="email"
-                  placeholder="Enter Email"
-                  autoComplete="off"
-                  name="email"
-                  className="form-control rounded-0"
-                  onChange={(e) => setEmail(e.target.value)}
-                />
+              <div className="form-check form-check-inline">
+                <input className="form-check-input" type="radio" name="gender" id="genderFemale" value="Female" onChange={handleChange} required />
+                <label className="form-check-label" htmlFor="genderFemale">Female</label>
               </div>
-              <div className="mb-3">
-                <label htmlFor="email">
-                  <strong>Password</strong>
-                </label>
-                <input
-                  type="password"
-                  placeholder="Enter Password"
-                  name="password"
-                  className="form-control rounded-0"
-                  onChange={(e) => setPassword(e.target.value)}
-                />
+              <div className="form-check form-check-inline">
+                <input className="form-check-input" type="radio" name="gender" id="genderOther" value="Other" onChange={handleChange} required />
+                <label className="form-check-label" htmlFor="genderOther">Other</label>
               </div>
-              <button type="submit" className="btn btn-success w-100 rounded-0">
-                Register
-              </button>
-              </form>
-              <p>Already Have an Account</p>
-              <Link to="/login" className="btn btn-default border w-100 bg-light rounded-0 text-decoration-none">
-                Login
-              </Link>
-            
+            </div>
+          </div>
+          <div className="mb-3">
+            <label htmlFor="dateOfBirth" className="form-label">Date of Birth</label>
+            <input type="date" id="dateOfBirth" name="dateOfBirth" className="form-control" onChange={handleChange} required />
           </div>
         </div>
-      );
-    }
-    
-    export default Signup;
-    
+        
+        <div className="form-section">
+          <h4>Ordinary Place of Practice</h4>
+          <div className="mb-3">
+            <label htmlFor="placeOfPractice" className="form-label">Ordinary Place of Practice</label>
+            <select id="placeOfPractice" name="placeOfPractice" className="form-select" onChange={handleChange} required>
+              <option value="District Court">District Court</option>
+              <option value="High Court">High Court</option>
+            </select>
+          </div>
+          <div className="mb-3">
+            <label htmlFor="district" className="form-label">District</label>
+            <select id="district" name="district" className="form-select" onChange={handleChange} required>
+              <option value="">-- Select District --</option>
+              <option value="District1">District1</option>
+              <option value="District2">District2</option>
+            </select>
+          </div>
+        </div>
+        
+        <div className="form-section">
+          <h4>Contact Details</h4>
+          <div className="mb-3">
+            <label htmlFor="mobileNumber" className="form-label">Mobile Number (+91)</label>
+            <input type="text" id="mobileNumber" name="mobileNumber" className="form-control" onChange={handleChange} required />
+          </div>
+          <div className="mb-3">
+            <label htmlFor="email" className="form-label">Email</label>
+            <input type="email" id="email" name="email" className="form-control" onChange={handleChange} required />
+          </div>
+        </div>
+        
+        <div className="form-section">
+          <h4>Choose Password</h4>
+          <div className="mb-3">
+            <label htmlFor="password" className="form-label">Password</label>
+            <input type="password" id="password" name="password" className="form-control" onChange={handleChange} required />
+          </div>
+          <div className="mb-3">
+            <label htmlFor="confirmPassword" className="form-label">Confirm Password</label>
+            <input type="password" id="confirmPassword" name="confirmPassword" className="form-control" onChange={handleChange} required />
+          </div>
+        </div>
+        
+        <div className="form-section">
+          <h4>OTP Verification</h4>
+          <div className="mb-3">
+            <label htmlFor="otp" className="form-label">OTP</label>
+            <div className="input-group">
+              <input type="text" id="otp" name="otp" className="form-control" onChange={handleChange} required />
+              <button type="button" className="btn btn-primary" onClick={handleGetOtp}>Get OTP</button>
+            </div>
+          </div>
+        </div>
+        
+        <button type="submit" className="btn btn-primary">Submit</button>
+      </form>
+    </div>
+  );
+}
+
+export default Signup;

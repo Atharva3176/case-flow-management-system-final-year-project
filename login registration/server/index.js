@@ -1,44 +1,84 @@
-const express = require("express")
-const mongoose = require("mongoose")
-const cors = require("cors")
-const EmployeeModel = require('./models/Employee')
+const express = require('express');
+const mongoose = require('mongoose');
+const bodyParser = require('body-parser');
+const cors = require('cors');
+const bcrypt = require('bcrypt');
+const Registration = require('./models/Employee');
+const twilio = require('twilio');
 
+const app = express();
+const port = 3001;
 
-const app = express()
-app.use(express.json())
-app.use(cors())
+// Middleware
+app.use(bodyParser.json());
+app.use(cors());
 
-mongoose.connect("mongodb://127.0.0.1:27017/employee");
+// MongoDB connection
+mongoose.connect('mongodb://127.0.0.1:27017/registration', {
+  useNewUrlParser: true,
+  useUnifiedTopology: true
+});
 
-app.post("/login", (req,res) => {
-    const {email, password} = req.body;
-    EmployeeModel.findOne({email: email})
-    .then(user =>{
-        if(user){
-            if(user.password == password){
-                res.json("Success")
-            }
+// Routes
+app.post('/api/register', async (req, res) => {
+  try {
+    const { password, confirmPassword, ...rest } = req.body;
+    if (password !== confirmPassword) {
+      return res.status(400).send({ message: "Passwords do not match" });
+    }
+    const registration = new Registration({ ...rest, password });
+    await registration.save();
+    res.status(201).send(registration);
+  } catch (error) {
+    res.status(400).send(error);
+  }
+});
 
-            else{
-                res.json("the password is incorrect")
-            }
-        }
+app.post('/login', async (req, res) => {
+  try {
+    const { username, password } = req.body;
+    const user = await Registration.findOne({
+      $or: [{ email: username }, { mobileNumber: username }]
+    });
 
-        else {
-            res.json("No record is exists")
-        }
+    if (!user) {
+      return res.status(404).send({ message: "User not found" });
+    }
+
+    const isMatch = await bcrypt.compare(password, user.password);
+    if (!isMatch) {
+      return res.status(400).send({ message: "Invalid credentials" });
+    }
+
+    res.status(200).send({ message: "Login successful" });
+  } catch (error) {
+    console.error("There was an error logging in!", error);
+    res.status(500).send(error);
+  }
+});
+
+const accountSid = 'ACb3673ca9c0095dd9d70f4f3ad46ab259';
+const authToken = '006814dee2488137216f99d31a8e44d2';
+const client = new twilio(accountSid, authToken);
+
+app.post('/send-otp', (req, res) => {
+  const { mobileNumber } = req.body;
+  const otp = Math.floor(100000 + Math.random() * 900000);
+
+  client.messages.create({
+    body: `Your OTP code is ${otp}`,
+    from: '+918208912077',
+    to: mobileNumber
+  })
+    .then(message => {
+      res.status(200).json({ success: true, message: 'OTP sent successfully', otp });
     })
+    .catch(error => {
+      console.error('Twilio error:', error);
+      res.status(500).json({ success: false, message: error.message });
+    });
+});
 
-})
-
-app.post('/register', (req, res) => {
-    const { name, email, password } = req.body 
-    EmployeeModel.create(req.body)
-    .then(employees => res.json(employees))
-    .catch(err => res.json(err))
-    
-})
-
-app.listen(3001, () =>{
-    console.log("Server is running")
-})
+app.listen(port, () => {
+  console.log(`Server running on port ${port}`);
+});
