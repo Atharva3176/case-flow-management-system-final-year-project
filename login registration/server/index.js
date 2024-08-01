@@ -57,3 +57,28 @@ app.post('/login', async (req, res) => {
   }
 });
 
+const accountSid = 'ACb3673ca9c0095dd9d70f4f3ad46ab259';
+const authToken = '006814dee2488137216f99d31a8e44d2';
+const client = new twilio(accountSid, authToken);
+
+app.post('/send-otp', (req, res) => {
+  const { mobileNumber } = req.body;
+  const otp = Math.floor(100000 + Math.random() * 900000);
+
+  client.messages.create({
+    body: `Your OTP code is ${otp}`,
+    from: '+918208912077',
+    to: mobileNumber
+  })
+    .then(message => {
+      res.status(200).json({ success: true, message: 'OTP sent successfully', otp });
+    })
+    .catch(error => {
+      console.error('Twilio error:', error);
+      res.status(500).json({ success: false, message: error.message });
+    });
+});
+
+app.listen(port, () => {
+  console.log(`Server running on port ${port}`);
+});
