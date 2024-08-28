@@ -4,7 +4,9 @@ const bodyParser = require('body-parser');
 const cors = require('cors');
 const bcrypt = require('bcrypt');
 const Registration = require('./models/Employee');
-const twilio = require('twilio');
+//const twilio = require('twilio');
+const otpGenerator = require('otp-generator');
+const nodemailer = require('nodemailer');
 
 const app = express();
 const port = 3001;
@@ -17,6 +19,63 @@ app.use(cors());
 mongoose.connect('mongodb://127.0.0.1:27017/registration', {
   useNewUrlParser: true,
   useUnifiedTopology: true
+});
+
+const otpSchema = new mongoose.Schema({
+  email: String,
+  otp: String,
+  createdAt: { type: Date, expires: '5m', default: Date.now }
+});
+
+const OTP = mongoose.model('OTP', otpSchema);
+
+// Generate OTP and send email
+app.post('/generate-otp', async (req, res) => {
+  const { email } = req.body;
+
+  const otp = otpGenerator.generate(6, { digits: true, alphabets: false, upperCase: false, specialChars: false });
+
+  try {
+    await OTP.create({ email, otp });
+
+    const transporter = nodemailer.createTransport({
+      service: 'gmail',
+      auth: {
+        user: 'xyz172838@gmail.com',
+        pass: 'zvku roaw tggx hdhq'
+      }
+    });
+
+    await transporter.sendMail({
+      from: 'xyz172838@gmail.com',
+      to: email,
+      subject: 'OTP Verification',
+      text: `Your OTP for verification is: ${otp}`
+    });
+
+    res.status(200).send('OTP sent successfully');
+  } catch (error) {
+    console.error(error);
+    res.status(500).send('Error sending OTP');
+  }
+});
+
+// Verify OTP
+app.post('/verify-otp', async (req, res) => {
+  const { email, otp } = req.body;
+
+  try {
+    const otpRecord = await OTP.findOne({ email, otp }).exec();
+
+    if (otpRecord) {
+      res.status(200).send('OTP verified successfully');
+    } else {
+      res.status(400).send('Invalid OTP');
+    }
+  } catch (error) {
+    console.error(error);
+    res.status(500).send('Error verifying OTP');
+  }
 });
 
 // Routes
@@ -57,28 +116,7 @@ app.post('/login', async (req, res) => {
   }
 });
 
-const accountSid = 'ACb3673ca9c0095dd9d70f4f3ad46ab259';
-const authToken = '006814dee2488137216f99d31a8e44d2';
-const client = new twilio(accountSid, authToken);
-
-app.post('/send-otp', (req, res) => {
-  const { mobileNumber } = req.body;
-  const otp = Math.floor(100000 + Math.random() * 900000);
-
-  client.messages.create({
-    body: `Your OTP code is ${otp}`,
-    from: '+918208912077',
-    to: mobileNumber
-  })
-    .then(message => {
-      res.status(200).json({ success: true, message: 'OTP sent successfully', otp });
-    })
-    .catch(error => {
-      console.error('Twilio error:', error);
-      res.status(500).json({ success: false, message: error.message });
-    });
-});
-
 app.listen(port, () => {
   console.log(`Server running on port ${port}`);
 });
+

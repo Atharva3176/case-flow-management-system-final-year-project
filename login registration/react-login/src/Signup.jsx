@@ -1,7 +1,6 @@
 import React, { useState } from 'react';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
-//import './Signup.css'; // Uncomment this line to include Signup specific CSS
 
 const Signup = () => {
   const navigate = useNavigate();
@@ -20,8 +19,22 @@ const Signup = () => {
     otp: ''
   });
 
+  const [otpSent, setOtpSent] = useState(false);
+
   const handleChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
+  };
+
+  const handleGetOtp = async () => {
+    try {
+      const response = await axios.post('http://localhost:3001/generate-otp', { email: formData.email });
+      console.log(response.data);
+      alert("OTP sent to " + formData.email);
+      setOtpSent(true);
+    } catch (error) {
+      console.error("There was an error sending the OTP!", error);
+      alert("Failed to send OTP. Please try again.");
+    }
   };
 
   const handleSubmit = async (e) => {
@@ -31,7 +44,18 @@ const Signup = () => {
       return;
     }
 
+    if (!otpSent) {
+      alert("Please generate and enter the OTP first");
+      return;
+    }
+
     try {
+      const otpResponse = await axios.post('http://localhost:3001/verify-otp', { email: formData.email, otp: formData.otp });
+      if (otpResponse.data !== 'OTP verified successfully') {
+        alert("Invalid OTP");
+        return;
+      }
+
       const response = await axios.post('http://localhost:3001/api/register', formData);
       console.log(response.data);
       alert("Registration successful");
@@ -40,10 +64,6 @@ const Signup = () => {
       console.error("There was an error registering the user!", error);
       alert("Registration failed. Please try again.");
     }
-  };
-
-  const handleGetOtp = () => {
-    alert("OTP sent to " + formData.mobileNumber);
   };
 
   return (
@@ -90,7 +110,7 @@ const Signup = () => {
             <input type="date" id="dateOfBirth" name="dateOfBirth" className="form-control" onChange={handleChange} required />
           </div>
         </div>
-        
+
         <div className="form-section">
           <h4>Ordinary Place of Practice</h4>
           <div className="mb-3">
@@ -109,7 +129,7 @@ const Signup = () => {
             </select>
           </div>
         </div>
-        
+
         <div className="form-section">
           <h4>Contact Details</h4>
           <div className="mb-3">
@@ -121,7 +141,7 @@ const Signup = () => {
             <input type="email" id="email" name="email" className="form-control" onChange={handleChange} required />
           </div>
         </div>
-        
+
         <div className="form-section">
           <h4>Choose Password</h4>
           <div className="mb-3">
@@ -133,7 +153,7 @@ const Signup = () => {
             <input type="password" id="confirmPassword" name="confirmPassword" className="form-control" onChange={handleChange} required />
           </div>
         </div>
-        
+
         <div className="form-section">
           <h4>OTP Verification</h4>
           <div className="mb-3">
@@ -144,7 +164,7 @@ const Signup = () => {
             </div>
           </div>
         </div>
-        
+
         <button type="submit" className="btn btn-primary">Submit</button>
       </form>
     </div>
