@@ -1,0 +1,166 @@
+.dashboard-container {
+  width: 90%;
+  margin: 0 auto;
+  font-family: Arial, sans-serif;
+  color: #333;
+}
+
+.dashboard-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background-color: #003b63;
+  padding: 10px 20px;
+  color: white;
+}
+
+.dashboard-header h1 {
+  margin: 0;
+}
+
+.header-nav {
+  display: flex;
+  justify-content: space-around;
+  margin-top: 20px;
+  padding: 15px 0;
+  background-color: #e9ecef;
+  border-radius: 5px;
+}
+
+.nav-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 10px;
+  text-align: center;
+  cursor: pointer;
+  position: relative;
+}
+
+.nav-item i {
+  font-size: 24px;
+  color: #003b63;
+}
+
+.nav-item span {
+  margin-top: 5px;
+  font-size: 14px;
+  color: #003b63;
+}
+
+.nav-item:hover {
+  background-color: #f0f0f0;
+  border-radius: 5px;
+}
+
+.dropdown-content {
+  display: none;
+  position: absolute;
+  top: 50px;
+  left: 0;
+  background-color: #f9f9f9;
+  box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+  z-index: 1;
+  border-radius: 5px;
+}
+
+.nav-item:hover .dropdown-content {
+  display: block;
+}
+
+.dropdown-content a {
+  color: black;
+  padding: 12px 16px;
+  text-decoration: none;
+  display: block;
+}
+
+.dropdown-content a:hover {
+  background-color: #f1f1f1;
+  border-radius: 5px;
+}
+
+.header-right {
+  display: flex;
+  align-items: center;
+  color: #fff;
+}
+
+.form-select {
+  margin-right: 15px;
+  padding: 5px;
+  padding-right: 25px; /* Added padding on the right to prevent overlap */
+  border-radius: 5px;
+  border: none;
+  appearance: none; /* Removes default arrow so we can style our own */
+  background-position: right 10px center;
+  background-size: 10px;
+}
+
+.btn-language {
+  background-color: #fff;
+  color: #003b63;
+  padding: 5px 10px;
+  margin-right: 15px;
+  border-radius: 5px;
+  border: none;
+}
+
+.user-info {
+  font-size: 16px;
+}
+
+.dashboard-stats {
+  display: flex;
+  justify-content: space-around;
+  margin: 20px 0;
+  padding: 20px;
+  background-color: #e9ecef;
+  border-radius: 5px;
+}
+
+.stat-box {
+  text-align: center;
+  padding: 10px;
+  border-radius: 5px;
+  background-color: #f8f9fa;
+}
+
+.stat-number {
+  font-size: 24px;
+  font-weight: bold;
+  color: #003b63;
+}
+
+.stat-label {
+  font-size: 14px;
+  margin-top: 5px;
+}
+
+.dashboard-calendar, .dashboard-cases {
+  margin: 20px 0;
+  padding: 20px;
+  background-color: #e9ecef;
+  border-radius: 5px;
+}
+
+.cases-table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.cases-table th, .cases-table td {
+  padding: 10px;
+  text-align: left;
+  border-bottom: 1px solid #ccc;
+}
+
+.cases-table th {
+  background-color: #003b63;
+  color: white;
+}
+
+.cases-table td a {
+  color: #003b63;
+  text-decoration: none;
+}

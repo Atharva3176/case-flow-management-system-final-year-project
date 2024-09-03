@@ -4,9 +4,11 @@ const bodyParser = require('body-parser');
 const cors = require('cors');
 const bcrypt = require('bcrypt');
 const Registration = require('./models/Employee');
-//const twilio = require('twilio');
+//const Captcha = require('captcha-generator');
 const otpGenerator = require('otp-generator');
 const nodemailer = require('nodemailer');
+const crypto = require('crypto');
+
 
 const app = express();
 const port = 3001;
@@ -29,11 +31,12 @@ const otpSchema = new mongoose.Schema({
 
 const OTP = mongoose.model('OTP', otpSchema);
 
+
 // Generate OTP and send email
 app.post('/generate-otp', async (req, res) => {
   const { email } = req.body;
 
-  const otp = otpGenerator.generate(6, { digits: true, alphabets: false, upperCase: false, specialChars: false });
+  const otp = otpGenerator.generate(9);
 
   try {
     await OTP.create({ email, otp });
@@ -115,6 +118,8 @@ app.post('/login', async (req, res) => {
     res.status(500).send(error);
   }
 });
+
+
 
 app.listen(port, () => {
   console.log(`Server running on port ${port}`);

@@ -4,7 +4,8 @@ import Signup from './Signup'
 import {BrowserRouter, Routes, Route} from 'react-router-dom'
 import Login from './Login'
 import Home from './Home'
-import './App.css'; // Add this line to include custom CSS
+import Dashboard from './dashboard';
+import './App.css'; 
 import Navbar from './Navbar.jsx';
 
 
@@ -18,6 +19,7 @@ function App() {
             <Route path='/api/register' element = {<Signup/>}></Route>
             <Route path='/login' element = {<Login/>}></Route>
             <Route path='/Home' element = {<Home/>}></Route>
+            <Route path="/dashboard" element={<Dashboard />} />
           </Routes>
       </BrowserRouter>
     </div>
