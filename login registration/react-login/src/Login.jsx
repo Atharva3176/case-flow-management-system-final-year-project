@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
+import Navbar from './Navbar.jsx';
 import { useNavigate } from 'react-router-dom';
 
 function Login() {
@@ -52,6 +53,8 @@ function Login() {
   };
 
   return (
+    <div>
+      <Navbar/>
     <div className="d-flex justify-content-center align-items-center vh-100" style={{ backgroundColor: '#f8f9fa' }}>
       <div className="p-4 rounded border" style={{ backgroundColor: '#ffffff', width: '400px', border: '2px solid #007bff', boxShadow: '0 4px 8px rgba(0, 0, 0, 0.1)' }}>
         <h2 className="mb-4 text-center">Login</h2>
@@ -190,6 +193,7 @@ function Login() {
         </form>
         <p className="mt-3">New User? <a href="/api/register">Register here</a></p>
       </div>
+    </div>
     </div>
   );
 }

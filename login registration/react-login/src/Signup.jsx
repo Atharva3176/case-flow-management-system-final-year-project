@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import axios from 'axios';
+import Navbar from './Navbar.jsx';
 import { useNavigate } from 'react-router-dom';
 
 const Signup = () => {
@@ -100,6 +101,8 @@ const Signup = () => {
   };
 
   return (
+    <div>
+      <Navbar/>
     <div className="form-container">
       <div className="form-header">Registration Form</div>
       <form onSubmit={handleSubmit}>
@@ -244,6 +247,7 @@ const Signup = () => {
 
         <button type="submit" className="btn btn-primary">Submit</button>
       </form>
+    </div>
     </div>
   );
 }

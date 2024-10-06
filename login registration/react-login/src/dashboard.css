@@ -64,7 +64,8 @@
   border-radius: 5px;
 }
 
-.nav-item:hover .dropdown-content {
+.nav-item:hover .dropdown-content,
+.dropdown-content:hover {
   display: block;
 }
 
@@ -86,15 +87,14 @@
   color: #fff;
 }
 
-.form-select {
-  margin-right: 15px;
-  padding: 5px;
-  padding-right: 25px; /* Added padding on the right to prevent overlap */
-  border-radius: 5px;
-  border: none;
-  appearance: none; /* Removes default arrow so we can style our own */
-  background-position: right 10px center;
-  background-size: 10px;
+.form-selec {
+  margin-right: 15px; 
+  padding: 5px; 
+  padding-right: 25px;
+  border-radius: 5px; 
+  border: 1px solid #ccc; 
+  background-position: right 10px center; 
+  background-size: 10px; 
 }
 
 .btn-language {

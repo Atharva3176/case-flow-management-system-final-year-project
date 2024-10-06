@@ -1,0 +1,98 @@
+/* Container for the Litigant Information form */
+.litigent-container {
+    width: 80%;
+    margin: 0 auto;
+    padding: 20px;
+    background-color: #f9f9f9;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  }
+  
+  .litigent-container h2 {
+    text-align: center;
+    font-size: 24px;
+    margin-bottom: 20px;
+    color: #333;
+  }
+  
+  /* Form layout styling */
+  .litigent-form {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+  }
+  
+  .litigent-form-group {
+    display: flex;
+    flex-direction: column;
+  }
+  
+  .litigent-form-group label {
+    font-weight: bold;
+    margin-bottom: 8px;
+    color: #555;
+  }
+  
+  .litigent-form-group select,
+  .litigent-form-group input[type="text"],
+  .litigent-form-group input[type="date"] {
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    font-size: 16px;
+    width: 100%;
+    box-sizing: border-box;
+  }
+  
+  .litigent-radio-group {
+    display: flex;
+    gap: 10px;
+    margin-top: 10px;
+  }
+  
+  .litigent-radio-group label {
+    display: flex;
+    align-items: center;
+  }
+  
+  .litigent-radio-group input[type="radio"] {
+    margin-right: 6px;
+  }
+  
+  /* Button styling */
+  .litigent-form-actions {
+    display: flex;
+    justify-content: center;
+    margin-top: 20px;
+  }
+  
+  .litigent-btn-submit {
+    padding: 10px 20px;
+    background-color: #4CAF50;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    font-size: 16px;
+    cursor: pointer;
+  }
+  
+  .litigent-btn-submit:hover {
+    background-color: #45a049;
+  }
+  
+  /* Responsive Design */
+  @media screen and (max-width: 768px) {
+    .litigent-container {
+      width: 95%;
+    }
+  
+    .litigent-form-actions {
+      justify-content: center;
+    }
+  
+    .litigent-btn-submit {
+      width: 100%;
+      text-align: center;
+    }
+  }
+  

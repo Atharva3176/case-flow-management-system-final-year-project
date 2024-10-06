@@ -1,0 +1,91 @@
+/* Make the navbar container cover the entire width of the screen */
+.navbar-container {
+  width: 100%;
+  height: 60px; /* Adjust the height as needed */
+  background-color: #004d99; /* Set the desired background color */
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0 20px; /* Adds padding to the left and right */
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Optional shadow */
+  position: fixed; /* Keeps the navbar fixed at the top */
+  top: 0;
+  left: 0;
+  z-index: 1000; /* Ensures the navbar stays on top of other elements */
+}
+
+/* Ensure the logo and title are aligned properly */
+.navbar-logo {
+  display: flex;
+  align-items: center;
+}
+
+.logo-image {
+  height: 40px; /* Adjust the logo size */
+  margin-right: 10px;
+}
+
+.brand-title {
+  color: white; /* Text color for brand title */
+  font-size: 1.5rem;
+}
+
+/* Style for the menu items */
+.navbar-menu {
+  list-style: none;
+  display: flex;
+  margin: 0;
+  padding: 0;
+}
+
+.navbar-menu li {
+  margin-left: 20px;
+}
+
+.navbar-menu a {
+  color: white; /* Text color for links */
+  text-decoration: none;
+  font-size: 1rem;
+  display: flex;
+  align-items: center;
+}
+
+.navbar-menu a:hover {
+  text-decoration: underline; /* Adds hover effect */
+}
+
+/* Right side of the navbar */
+.navbar-right {
+  display: flex;
+  align-items: center;
+}
+
+.form-selec {
+  margin-right: 15px; 
+  padding: 5px; 
+  padding-right: 5px;
+  border-radius: 5px; 
+  border: 1px solid #ccc; 
+  background-position: right 10px center; 
+  background-size: 10px; 
+}
+
+.btn-language {
+  background-color: #0073e6;
+  color: white;
+  border: none;
+  padding: 5px 10px;
+  border-radius: 4px;
+  margin-right: 10px;
+  cursor: pointer;
+}
+
+.btn-language:hover {
+  background-color: #005bb5;
+}
+
+.user-info {
+  color: white;
+  font-weight: bold;
+  margin-left: 10px;
+}
