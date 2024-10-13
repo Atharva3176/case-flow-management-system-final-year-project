@@ -63,6 +63,7 @@ h3 {
 }
 
 /* Act details fields layout */
+<<<<<<< HEAD
 /* Act details fields layout */
 .act-details-form-group {
     display: flex;
@@ -79,6 +80,12 @@ h3 {
 
 .act-details-form-group select {
     margin-bottom: 15px; /* Adds space between Act and Section dropdowns */
+=======
+.act-details-form-group {
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 15px;
+>>>>>>> 1e0b9105ea93d3d61f97e784e345a1943194b3e3
 }
 
 /* Add Act button styling */
