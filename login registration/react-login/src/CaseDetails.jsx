@@ -32,11 +32,7 @@ const CaseDetails = () => {
     };
 
     const handleSubmit = (e) => {
-<<<<<<< HEAD
         //e.preventDefault();
-=======
-        e.preventDefault();
->>>>>>> 1e0b9105ea93d3d61f97e784e345a1943194b3e3
         // Handle form submission logic
         console.log({
             causeOfAction,
@@ -145,52 +141,28 @@ const CaseDetails = () => {
 
                             <div className="case-details-form-group">
                                 <label>District</label>
-<<<<<<< HEAD
                                 <select value={district} onChange={(e) => setState(e.target.value)}>
                                     <option value="Aurangabad">Aurangabad</option>
                                     {/* Add more state options as needed */}
                                 </select>
-=======
-                                <input
-                                    type="text"
-                                    value={district}
-                                    onChange={(e) => setDistrict(e.target.value)}
-                                />
->>>>>>> 1e0b9105ea93d3d61f97e784e345a1943194b3e3
                             </div>
                         </div>
 
                         <div className="case-details-row">
                             <div className="case-details-form-group">
                                 <label>Taluka</label>
-<<<<<<< HEAD
                                 <select value={taluka} onChange={(e) => setState(e.target.value)}>
                                     <option value="Aurangabad">Aurangabad</option>
                                     {/* Add more state options as needed */}
                                 </select>
-=======
-                                <input
-                                    type="text"
-                                    value={taluka}
-                                    onChange={(e) => setTaluka(e.target.value)}
-                                />
->>>>>>> 1e0b9105ea93d3d61f97e784e345a1943194b3e3
                             </div>
 
                             <div className="case-details-form-group">
                                 <label>Village</label>
-<<<<<<< HEAD
                                 <select value={village} onChange={(e) => setState(e.target.value)}>
                                     <option value="Aurangabad">Aurangabad</option>
                                     {/* Add more state options as needed */}
                                 </select>
-=======
-                                <input
-                                    type="text"
-                                    value={village}
-                                    onChange={(e) => setVillage(e.target.value)}
-                                />
->>>>>>> 1e0b9105ea93d3d61f97e784e345a1943194b3e3
                             </div>
                         </div>
                     </div>
@@ -201,7 +173,6 @@ const CaseDetails = () => {
                         {acts.map((act, index) => (
                             <div key={index} className="act-details-form-group">
                                 <label>Act {index + 1} *</label>
-<<<<<<< HEAD
                                 <select
                                     value={act.act}
                                     onChange={(e) => handleActChange(index, 'act', e.target.value)}
@@ -226,22 +197,6 @@ const CaseDetails = () => {
                                     <option value="Section 420">Section 420</option>
                                     {/* Add more sections based on the selected act */}
                                 </select>
-=======
-                                <input
-                                    type="text"
-                                    value={act.act}
-                                    onChange={(e) => handleActChange(index, 'act', e.target.value)}
-                                    required
-                                />
-
-                                <label>Section {index + 1} *</label>
-                                <input
-                                    type="text"
-                                    value={act.section}
-                                    onChange={(e) => handleActChange(index, 'section', e.target.value)}
-                                    required
-                                />
->>>>>>> 1e0b9105ea93d3d61f97e784e345a1943194b3e3
                             </div>
                         ))}
 
