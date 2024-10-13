@@ -14,7 +14,7 @@ const CaseFiling = () => {
 
   const navigate = useNavigate();
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async(e) => {
     e.preventDefault();
     //Navigate('/litigent');
     // Handle form submission logic here
@@ -27,7 +27,39 @@ const CaseFiling = () => {
       petitioner,
       mobile
     });
-    navigate('/litigent')
+
+    const caseData = {
+      district,
+      establishment,
+      caseType,
+      nature,
+      relief,
+      petitioner,
+      mobile
+    };
+
+    try {
+      const response = await fetch('http://localhost:3001/api/casefiling', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(caseData)
+      });
+
+      const result = await response.json();
+
+      if (response.ok) {
+        console.log('Case filed successfully:', result);
+        // Navigate to another page after successful submission
+        alert("details saved")
+        navigate('/litigent');
+      } else {
+        console.error('Failed to file case:', result.message);
+      }
+    } catch (error) {
+      console.error('Error while submitting case:', error);
+    }
   };
 
   const handleReset = () => {

@@ -8,7 +8,29 @@
   font-family: Arial, sans-serif;
 }
 
-h2, h3 {
+.efiling-info {
+  max-width: 900px;
+  margin: 20px auto 0; 
+  padding: 20px;
+  background-color: #f9f9f9;
+  border-radius: 8px;
+  border: 1px solid #ccc;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.efiling-info h2,
+.efiling-info h3 {
+  color: #333;
+  margin-bottom: 10px;
+  font-weight: bold;
+}
+
+.efiling-info p{
+  align-items: center;
+}
+
+h2,
+h3 {
   padding-top: 30px;
   color: #444;
   margin-bottom: 10px;
@@ -39,13 +61,14 @@ h2, h3 {
   color: #555;
 }
 
-.litigent-form-group input, 
+.litigent-form-group input,
 .litigent-form-group select {
   padding: 12px;
   border: 1px solid #ccc;
   border-radius: 6px;
   width: 100%;
   font-size: 15px;
+  box-sizing: border-box;
 }
 
 .litigent-radio-group {
@@ -56,6 +79,7 @@ h2, h3 {
 .litigent-radio-group label {
   display: flex;
   align-items: center;
+  cursor: pointer;
 }
 
 .litigent-radio-group input {
@@ -68,15 +92,16 @@ h2, h3 {
   margin-top: 25px;
 }
 
-.litigent-btn-submit, 
-.litigent-btn-reset {
+.litigent-btn-submit,
+.litigent-btn-reset,
+.litigent-btn-update {
   padding: 12px 25px;
   border: none;
   border-radius: 8px;
   cursor: pointer;
   font-weight: bold;
   font-size: 16px;
-  transition: background-color 0.3s;
+  transition: background-color 0.3s ease;
 }
 
 .litigent-btn-submit {
@@ -95,4 +120,37 @@ h2, h3 {
 
 .litigent-btn-reset:hover {
   background-color: #c82333;
+}
+
+.litigent-btn-update {
+  background-color: #ffc107;
+  color: white;
+}
+
+.litigent-btn-update:hover {
+  background-color: #e0a800;
+}
+
+/* Adding responsive behavior for smaller screens */
+@media (max-width: 768px) {
+  .litigent-container,
+  .efiling-info {
+    padding: 20px;
+  }
+
+  .litigent-form-group {
+    margin-bottom: 15px;
+  }
+
+  .litigent-form-actions {
+    flex-direction: column;
+    gap: 15px;
+  }
+
+  .litigent-btn-submit,
+  .litigent-btn-reset,
+  .litigent-btn-update {
+    width: 100%;
+    padding: 12px;
+  }
 }

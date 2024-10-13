@@ -7,6 +7,7 @@ import Home from './Home'
 import Dashboard from './dashboard';
 import CaseFiling from './CaseFiling';
 import Litigent from './Litigent';
+import CaseDetails from './CaseDetails';
 import './App.css'; 
 //import Navbar from './Navbar.jsx';
 
@@ -24,6 +25,7 @@ function App() {
             <Route path="/dashboard" element={<Dashboard />} />
             <Route path="/case-filing" element={<CaseFiling/>} />
             <Route path="/litigent" element={<Litigent/>}/>
+            <Route path="/case-details" element={<CaseDetails/>}/>
           </Routes>
       </BrowserRouter>
     </div>
