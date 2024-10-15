@@ -8,7 +8,13 @@ import Dashboard from './dashboard';
 import CaseFiling from './CaseFiling';
 import Litigent from './Litigent';
 import CaseDetails from './CaseDetails';
+import CaseFiling1 from './caseFilling1';
+import PortfolioPage from './PortfolioPage';
+import Priority from './Priority'
+import New from './New';
 import './App.css'; 
+//import chat from './Chatbot'
+//import Chatbot from './Chatbot'
 //import Navbar from './Navbar.jsx';
 
 
@@ -26,6 +32,11 @@ function App() {
             <Route path="/case-filing" element={<CaseFiling/>} />
             <Route path="/litigent" element={<Litigent/>}/>
             <Route path="/case-details" element={<CaseDetails/>}/>
+            <Route path="/case-submit" element={<CaseFiling1/>}/>
+            <Route path="/portfolio" element={<PortfolioPage/>}/>
+            <Route path="/sapdla" element={<New/>}/>
+            <Route path="/urgent" element={<Priority/>}/>
+            {/* <Route path="/chat" element={<Chatbot/>}/> */}
           </Routes>
       </BrowserRouter>
     </div>

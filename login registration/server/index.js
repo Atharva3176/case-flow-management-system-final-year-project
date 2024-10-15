@@ -6,6 +6,7 @@ const bcrypt = require('bcrypt');
 const Registration = require('./models/Employee');
 const CaseFilingLitigent = require('./models/CaseFilingLitigent'); // CaseFiling schema
 const Litigent = require('./models/Litigent');
+const CaseManagement = require('./models/CaseManagement')
 //const Captcha = require('captcha-generator');
 const otpGenerator = require('otp-generator');
 const nodemailer = require('nodemailer');
@@ -271,6 +272,185 @@ app.get('/api/caseDetails', async (req, res) => {
     res.status(500).json({ message: 'Internal server error' });
   }
 });
+
+// POST API route for Case Management
+app.post('/api/case-management', async (req, res) => {
+  try {
+    const {
+      causeOfAction,
+      dateOfCause,
+      importantInfo,
+      prayer,
+      valuation,
+      localPlaint,
+      state,
+      district,
+      taluka,
+      village,
+      acts,
+      vadasKaran,
+      mahatwachiMahiti,
+      keleliMagni,
+    } = req.body;
+
+    //console.log('Incoming request body:', req.body); 
+
+    const caseManagement = new CaseManagement({
+      causeOfAction,
+      dateOfCause,
+      importantInfo,
+      prayer,
+      valuation,
+      localPlaint,
+      state,
+      district,
+      taluka,
+      village,
+      acts,
+      vadasKaran,
+      mahatwachiMahiti,
+      keleliMagni,
+    });
+
+    await caseManagement.save();
+    res.status(201).json({ message: 'Case management entry created successfully', caseManagement });
+  } catch (error) {
+    console.error('Failed to create case management entry:', error);
+    res.status(500).json({ message: 'Failed to create case management entry', error });
+  }
+});
+
+app.get('/case-management', async (req, res) => {
+  try {
+    // Fetch and sort case management entries by createdAt in descending order
+    const caseManagements = await CaseManagement.find().sort({ createdAt: -1 }); // -1 for descending order
+    res.status(200).json(caseManagements);
+  } catch (error) {
+    res.status(500).json({ message: error.message });
+  }
+});
+
+app.get('/casefillingfetch', async (req, res) => {
+  try {
+    const casefilingfetch = await CaseFilingLitigent.find().sort({ createdAt: -1 });
+    res.status(200).json(casefilingfetch);
+  } catch (error) {
+    res.status(500).json({ message: error.message });
+  }
+});
+
+app.get('/caselitigent', async (req, res) => {
+  try {
+    // Fetch the most recent litigant entry sorted by createdAt in descending order
+    const recentLitigent = await Litigent.find().sort({ createdAt: -1 }).limit(10);  // Find the last entry
+
+    
+
+    // Return the most recent litigant entry in an array (if needed for consistency)
+    res.status(200).json(recentLitigent);  // Wrap it in an array
+  } catch (error) {
+    res.status(500).json({ message: error.message });
+  }
+});
+
+app.get('/caselitigent1', async (req, res) => {
+  try {
+    // Fetch the most recent litigant entry sorted by createdAt in descending order
+    const recentLitigent = await Litigent.find();  // Find the last entry
+
+    
+
+    // Return the most recent litigant entry in an array (if needed for consistency)
+    res.status(200).json(recentLitigent);  // Wrap it in an array
+  } catch (error) {
+    res.status(500).json({ message: error.message });
+  }
+});
+
+// New API route to fetch case details by e-filing number
+app.get('/api/caseDetails/:eFilingNumber', async (req, res) => {
+  const { eFilingNumber } = req.params;
+
+  try {
+    // Search for the case using the e-filing number in the Litigent collection
+    const caseDetail = await Litigent.findOne({ efilingNumber: eFilingNumber });
+
+    if (!caseDetail) {
+      return res.status(404).json({ message: 'Case not found' });
+    }
+
+    res.status(200).json(caseDetail); // Return the found case details
+  } catch (error) {
+    console.error('Error fetching case details:', error);
+    res.status(500).json({ message: 'Internal server error' });
+  }
+});
+
+
+app.get('/api/caseDetails1', async (req, res) => {
+  try {
+    // Fetch all cases, sorted by priority level and date filed
+    const caseDetails = await CaseFilingLitigent.find({})
+      .sort({ urgent: -1, priorityLevel: 1, dateFiled: 1 }) // Urgent, then priority, then oldest first
+      .lean();
+
+    if (caseDetails.length === 0) {
+      return res.status(404).json({ message: 'No case details found' });
+    }
+
+    res.status(200).json(caseDetails);
+  } catch (error) {
+    console.error('Error fetching case details:', error);
+    res.status(500).json({ message: 'Internal server error' });
+  }
+});
+
+
+
+// GET API route to retrieve eFiling numbers from the Litigent schema
+app.get('/api/case', async (req, res) => {
+  try {
+    // Fetch all case filings from the database
+    const caseDetails = await Litigent.find({}, 'efilingNumber').lean();
+
+    // Check if case details were found
+    if (caseDetails.length === 0) {
+      return res.status(404).json({ message: 'No case details found' });
+    }
+
+    // Send the establishment and caseType back as a response
+    res.status(200).json(caseDetails);
+  } catch (error) {
+    console.error('Error fetching case details:', error);
+    res.status(500).json({ message: 'Internal server error' });
+  }
+});
+
+app.get('/api/session', async (req, res) => {
+  try {
+    // Fetch all case filings from the database
+    const caseDetails = await Registration.find({}, 'advocateName').lean();
+
+    // Check if case details were found
+    if (caseDetails.length === 0) {
+      return res.status(404).json({ message: 'No case details found' });
+    }
+
+    // Send the establishment and caseType back as a response
+    res.status(200).json(caseDetails);
+  } catch (error) {
+    console.error('Error fetching case details:', error);
+    res.status(500).json({ message: 'Internal server error' });
+  }
+});
+
+
+
+
+
+
+
+
 
 
 app.listen(port, () => {

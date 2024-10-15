@@ -1,0 +1,90 @@
+/* CSS for better GUI */
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f4f4f9;
+    margin: 0;
+    padding: 20px;
+  }
+  
+  h1, h2 {
+    text-align: center;
+    color: #333;
+  }
+  
+  .case-list-container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 20px;
+  }
+  
+  .case-item {
+    background-color: #fff;
+    border: 2px solid #ddd;
+    margin-bottom: 20px;
+    padding: 15px;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    transition: transform 0.2s ease;
+  }
+  
+  .case-item:hover {
+    transform: translateY(-5px);
+  }
+  
+  .case-item.urgent {
+    border-color: #e74c3c; /* Red border for urgent cases */
+  }
+  
+  .case-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  
+  .case-header h3 {
+    margin: 0;
+    font-size: 1.5em;
+    color: #2c3e50;
+  }
+  
+  .case-header .priority {
+    padding: 5px 10px;
+    background-color: #3498db; /* Blue for normal cases */
+    color: #fff;
+    border-radius: 5px;
+  }
+  
+  .case-header .priority.high {
+    background-color: #e74c3c; /* Red for high priority */
+  }
+  
+  .case-header .priority.low {
+    background-color: #2ecc71; /* Green for low priority */
+  }
+  
+  .case-details {
+    margin-top: 10px;
+    font-size: 0.9em;
+    color: #555;
+  }
+  
+  .case-footer {
+    text-align: right;
+    margin-top: 10px;
+  }
+  
+  .case-footer button {
+    padding: 10px 20px;
+    background-color: #2980b9;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.2s ease;
+  }
+  
+  .case-footer button:hover {
+    background-color: #1f6397;
+  }
+  
+  

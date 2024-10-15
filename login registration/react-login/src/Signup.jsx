@@ -153,7 +153,7 @@ const Signup = () => {
           </div>
           <div className="mb-3">
             <label htmlFor="barRegistrationNumber" className="form-label">Bar Registration Number</label>
-            <input type="text" id="barRegistrationNumber" name="barRegistrationNumber" className="form-control" onChange={handleChange} required />
+            <input type="text" id="barRegistrationNumber" name="barRegistrationNumber" className="form-control" placeholder="[BARCode]-[RegistrationNumber]-[RegistrationYear] Example: MAH-179-2016 or MAH/179/2016" onChange={handleChange} required />
           </div>
           <div className="mb-3">
             <label htmlFor="advocateName" className="form-label">Advocate Name</label>
@@ -214,7 +214,7 @@ const Signup = () => {
           <h4>Contact Details</h4>
           <div className="mb-3">
             <label htmlFor="mobileNumber" className="form-label">Mobile Number (+91)</label>
-            <input type="text" id="mobileNumber" name="mobileNumber" className="form-control" onChange={handleChange} required />
+            <input type="text" id="mobileNumber" name="mobileNumber" className="form-control" pattern="^\d{10}$" title="Mobile number must be 10 digits" onChange={handleChange} required />
           </div>
           <div className="mb-3">
             <label htmlFor="email" className="form-label">Email</label>
@@ -226,11 +226,11 @@ const Signup = () => {
           <h4>Choose Password</h4>
           <div className="mb-3">
             <label htmlFor="password" className="form-label">Password</label>
-            <input type="password" id="password" name="password" className="form-control" onChange={handleChange} required />
+            <input type="password" id="password" name="password" className="form-control" pattern=".{8,}" title="Password must be at least 8 characters long" onChange={handleChange} required />
           </div>
           <div className="mb-3">
             <label htmlFor="confirmPassword" className="form-label">Confirm Password</label>
-            <input type="password" id="confirmPassword" name="confirmPassword" className="form-control" onChange={handleChange} required />
+            <input type="password" id="confirmPassword" name="confirmPassword" className="form-control" pattern=".{8,}" title="Password must be at least 8 characters long" onChange={handleChange} required />
           </div>
         </div>
 

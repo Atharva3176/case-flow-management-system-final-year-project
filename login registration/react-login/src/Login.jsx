@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import Navbar from './Navbar.jsx';
+import './login.css'
 import { useNavigate } from 'react-router-dom';
 
 function Login() {
@@ -55,8 +56,8 @@ function Login() {
   return (
     <div>
       <Navbar/>
-    <div className="d-flex justify-content-center align-items-center vh-100" style={{ backgroundColor: '#f8f9fa' }}>
-      <div className="p-4 rounded border" style={{ backgroundColor: '#ffffff', width: '400px', border: '2px solid #007bff', boxShadow: '0 4px 8px rgba(0, 0, 0, 0.1)' }}>
+    <div className="login-container">
+      <div className="login-box">
         <h2 className="mb-4 text-center">Login</h2>
         <form onSubmit={handleSubmit}>
           <div className="mb-3">
@@ -66,9 +67,7 @@ function Login() {
               className="form-select"
               value={state}
               onChange={(e) => setState(e.target.value)}
-              required
-              style={{ border: '2px solid #007bff' }}
-            >
+              required>
               <option value="">Select State</option>
               <option value="AP">Andhra Pradesh</option>
               <option value="AN">Andaman and Nicobar Islands</option>
@@ -110,7 +109,7 @@ function Login() {
           </div>
           <div className="mb-3">
             <label className="form-label"><strong>Role</strong></label>
-            <div>
+            <div className='role-options'>
               <input
                 type="radio"
                 id="advocate"
@@ -128,14 +127,6 @@ function Login() {
                 onChange={(e) => setRole(e.target.value)}
               />
               <label htmlFor="litigant" className="me-3">Litigant</label>
-              <input
-                type="radio"
-                id="govt_pleader"
-                name="role"
-                value="Govt. Pleader"
-                onChange={(e) => setRole(e.target.value)}
-              />
-              <label htmlFor="govt_pleader" className="me-3">Govt. Pleader</label>
               <input
                 type="radio"
                 id="clerk"

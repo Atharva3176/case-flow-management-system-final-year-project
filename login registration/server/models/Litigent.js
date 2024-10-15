@@ -92,7 +92,9 @@ const CaseFilingLitigentSchema1 = new mongoose.Schema({
   dateFiled: {
     type: Date,
     default: Date.now
-  }
+  },
+  createdAt: { type: Date, default: Date.now },
+  updatedAt: { type: Date, default: Date.now }
 });
 
 // Create the model

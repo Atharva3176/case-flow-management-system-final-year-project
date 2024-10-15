@@ -10,7 +10,9 @@ const caseFilingLitigentSchema = new mongoose.Schema({
   petitioner: { type: String, required: true }, // New field for petitioner's name
   mobile: { type: String, required: true }, // New field for mobile number
   createdAt: { type: Date, default: Date.now },
-  updatedAt: { type: Date, default: Date.now }
+  updatedAt: { type: Date, default: Date.now },
+  priorityLevel: { type: Number, default: 1 },  // Priority level (1 = high, 5 = low)
+  urgent: { type: Boolean, default: false }   
 });
 
 // Create the model using the schema

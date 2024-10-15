@@ -11,8 +11,8 @@ const Navinbar = () => {
 
       <ul className="navbar-menu">
         <li>
-          <Link to="/my-partners">
-            <i className="fas fa-users"></i> My Partners
+          <Link to="/dashboard">
+            <i className="fas fa-users"></i> Dashboard
           </Link>
         </li>
         <li className="dropdown">
@@ -31,7 +31,7 @@ const Navinbar = () => {
           </Link>
         </li>
         <li>
-          <Link to="/epayments">
+          <Link to="/chat">
             <i className="fas fa-rupee-sign"></i> ePayments
           </Link>
         </li>

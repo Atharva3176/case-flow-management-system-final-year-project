@@ -56,7 +56,7 @@ const Dashboard = () => {
 	          <option value="PY">Puducherry</option>                     
           </select>
           <button className="btn-language">मराठी</button>
-          <div className="user-info">KULKARNI...</div>
+          <div className="user-info" id='nav'>KULKARNI...</div>
         </div>
       </header>
 
