@@ -1,9 +1,12 @@
 import React, { useState, useEffect } from 'react';
 import './data.css';
 import Navinbar from './Navinbar';
+import { useNavigate } from 'react-router-dom'; 
+
 
 const New = () => {
     const [caseData, setCaseData] = useState([]);
+    const navigate = useNavigate();
 
     // Fetch data from the backend when the component mounts
     useEffect(() => {
@@ -24,6 +27,12 @@ const New = () => {
 
         fetchCaseData(); // Call the function to fetch data
     }, []);
+
+
+    const handleNextClick = () => {
+        alert("Case submitted successfully");
+        navigate('/dashboard'); // Navigate to dashboard
+    };
 
     // Remove duplicates based on eFilingNumber
     const uniqueData = Array.isArray(caseData) ? Array.from(new Set(caseData.map(item => item.efilingNumber)))
@@ -118,7 +127,7 @@ const New = () => {
                             </tbody>
                         </table>
 
-                        <button className="efile-case-btn">Next</button>
+                        <button className="efile-case-btn" onClick={handleNextClick}>Next</button>
                     </div>
                 ))
             ) : (

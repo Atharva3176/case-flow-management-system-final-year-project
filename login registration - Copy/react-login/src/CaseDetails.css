@@ -12,6 +12,7 @@ h2,
 h3 {
     color: #444;
     margin-bottom: 10px;
+    padding-top: 0.5px;
 }
 
 .case-details-form {

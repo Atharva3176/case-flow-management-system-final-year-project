@@ -12,7 +12,8 @@ const RegistrationSchema = new mongoose.Schema({
   mobileNumber: { type: String, required: true },
   email: { type: String, required: true },
   password: { type: String, required: true },
-  otp: { type: String, required: true }
+  otp: { type: String, required: true},
+  createdAt: { type: Date, expires: '1m', default: Date.now }
 });
 
 // Pre-save hook to hash the password before saving it to the database

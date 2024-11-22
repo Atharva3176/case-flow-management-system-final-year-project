@@ -20,6 +20,9 @@ const Navbar = () => {
             <li className="nav-item">
               <Link className="nav-link" to="/login">Login</Link>
             </li>
+            <li className="nav-item">
+              <Link className="nav-link" to="/chat">Chatbot</Link>
+            </li>
           </ul>
           <div className="navbar-heading">eFiling Services <br></br> online Application for case filling</div>    
         </div>

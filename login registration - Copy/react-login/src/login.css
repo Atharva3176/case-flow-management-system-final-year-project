@@ -30,7 +30,7 @@ p a:hover {
     min-height: 100vh;
     background-color: #f8f9fa;
     /* Adjust padding-top to ensure space under the navbar */
-    padding-top: 30px; /* Adjust this value based on your navbar height */
+    padding-top: 70px; /* Adjust this value based on your navbar height */
 }
 
 .login-box {

@@ -10,11 +10,12 @@ import Litigent from './Litigent';
 import CaseDetails from './CaseDetails';
 import CaseFiling1 from './caseFilling1';
 import PortfolioPage from './PortfolioPage';
-import Priority from './Priority'
+import Priority from './Priority';
+import EmailForm from './EmailForm';
 import New from './New';
 import './App.css'; 
 //import chat from './Chatbot'
-//import Chatbot from './Chatbot'
+import Chatbot from './Chatbot'
 //import Navbar from './Navbar.jsx';
 
 
@@ -25,6 +26,7 @@ function App() {
       <BrowserRouter>
           {/* <Navbar /> */}
           <Routes>
+            <Route path='/' element = {<Home/>}></Route>
             <Route path='/api/register' element = {<Signup/>}></Route>
             <Route path='/login' element = {<Login/>}></Route>
             <Route path='/Home' element = {<Home/>}></Route>
@@ -36,7 +38,8 @@ function App() {
             <Route path="/portfolio" element={<PortfolioPage/>}/>
             <Route path="/sapdla" element={<New/>}/>
             <Route path="/urgent" element={<Priority/>}/>
-            {/* <Route path="/chat" element={<Chatbot/>}/> */}
+            <Route path="/chat" element={<Chatbot/>}/>
+            <Route path="/malamailtak" element={<EmailForm/>}/>
           </Routes>
       </BrowserRouter>
     </div>

@@ -12,7 +12,8 @@ const caseFilingLitigentSchema = new mongoose.Schema({
   createdAt: { type: Date, default: Date.now },
   updatedAt: { type: Date, default: Date.now },
   priorityLevel: { type: Number, default: 1 },  // Priority level (1 = high, 5 = low)
-  urgent: { type: Boolean, default: false }   
+  urgent: { type: Boolean, default: false },
+  //hearingdate: [{type: String, required: true}]   
 });
 
 // Create the model using the schema

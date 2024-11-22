@@ -32,7 +32,7 @@ const Navinbar = () => {
         </li>
         <li>
           <Link to="/chat">
-            <i className="fas fa-rupee-sign"></i> ePayments
+            <i className="fas fa-rupee-sign"></i> Chatbot 
           </Link>
         </li>
         <li className="dropdown">

@@ -6,7 +6,8 @@ const bcrypt = require('bcrypt');
 const Registration = require('./models/Employee');
 const CaseFilingLitigent = require('./models/CaseFilingLitigent'); // CaseFiling schema
 const Litigent = require('./models/Litigent');
-const CaseManagement = require('./models/CaseManagement')
+const CaseManagement = require('./models/CaseManagement');
+const Case = require('./models/Case')
 //const Captcha = require('captcha-generator');
 const otpGenerator = require('otp-generator');
 const nodemailer = require('nodemailer');
@@ -445,10 +446,86 @@ app.get('/api/session', async (req, res) => {
 });
 
 
+app.put('/caselitigent/:efilingNumber', async (req, res) => {
+  try {
+    const efilingNumber = req.params.efilingNumber; // Get efilingNumber from the URL
+    const { hearingDate, caseType, establishment, dateFiled, urgent, priorityLevel } = req.body; // Extract the relevant fields from the request body
 
+    // Try to find the case by efilingNumber
+    let caseItem = await Case.findOne({ efilingNumber });
 
+    if (!caseItem) {
+      // If the case doesn't exist, create a new case with the data
+      caseItem = new Case({
+        efilingNumber,
+        hearingDate: hearingDate || null, // Save the hearing date if available
+        caseType,
+        establishment,
+        dateFiled,
+        urgent,
+        priorityLevel,
+      });
+    } else {
+      // If the case exists, update it with the provided data
+      caseItem.hearingDate = hearingDate || caseItem.hearingDate;
+      caseItem.caseType = caseType || caseItem.caseType;
+      caseItem.establishment = establishment || caseItem.establishment;
+      caseItem.dateFiled = dateFiled || caseItem.dateFiled;
+      caseItem.urgent = urgent !== undefined ? urgent : caseItem.urgent;
+      caseItem.priorityLevel = priorityLevel !== undefined ? priorityLevel : caseItem.priorityLevel;
+    }
 
+    // Save the case (new or updated) in the database
+    await caseItem.save();
 
+    res.status(200).json({ message: 'Case data saved successfully' });
+  } catch (err) {
+    res.status(500).json({ message: 'Error saving case data', error: err });
+  }
+});
+
+// Endpoint to send case data to the entered email
+app.post('/send-case-data', async (req, res) => {
+  const { email } = req.body;
+
+  try {
+    // Fetch all case data from the MongoDB database
+    const cases = await Case.find();
+
+    if (cases.length === 0) {
+      return res.status(404).send('No cases found');
+    }
+
+    const transporter = nodemailer.createTransport({
+      service: 'gmail',
+      auth: {
+        user: 'xyz172838@gmail.com',
+        pass: 'zvku roaw tggx hdhq',  // Store securely in production
+      },
+    });
+
+    // Format the case data to send
+    const caseDetails = cases
+      .map(
+        (caseItem) =>
+          `Case: ${caseItem.efilingNumber}\nCase Type: ${caseItem.caseType}\nEstablishment: ${caseItem.establishment}\nDate Filed: ${caseItem.dateFiled.toLocaleDateString()}\nUrgent: ${caseItem.urgent ? 'Yes' : 'No'}\nPriority Level: ${caseItem.priorityLevel === 1 ? 'High' : 'Low'}\nHearing Date: ${caseItem.hearingDate ? caseItem.hearingDate.toLocaleDateString() : 'Not assigned'}`
+      )
+      .join('\n\n');
+
+    // Send the email
+    await transporter.sendMail({
+      from: 'xyz172838@gmail.com',
+      to: email,
+      subject: 'Case Data with Hearing Date',
+      text: `Here are the details of your case(s):\n\n${caseDetails}`,
+    });
+
+    res.status(200).send('Data sent successfully');
+  } catch (error) {
+    console.error(error);
+    res.status(500).send('Error sending email');
+  }
+});
 
 
 
